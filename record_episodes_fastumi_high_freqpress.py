@@ -9,6 +9,7 @@ import os
 import cv2
 import h5py
 import rospy
+import json
 import numpy as np
 import pandas as pd
 import argparse
@@ -22,13 +23,13 @@ from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import Image
 from nav_msgs.msg import Odometry
 
-from config.config import TASK_CONFIG, ROBOT_TYPE
-
 class DataRecorder:
-    def __init__(self, task_name, num_episodes):
+    def __init__(self, task_name, num_episodes, config_path='config.json'):
         """Initialize the data recorder with task configuration and paths."""
-        self.cfg = TASK_CONFIG
-        self.robot = ROBOT_TYPE
+        # Load configuration
+        with open(config_path, 'r') as f:
+            self.config = json.load(f)
+        
         self.task = task_name
         self.num_episodes = num_episodes
         
@@ -39,9 +40,11 @@ class DataRecorder:
         rospy.init_node('video_trajectory_recorder', anonymous=True)
         self.cv_bridge = CvBridge()
         
-        # Recording parameters
-        self.fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        self.frame_width, self.frame_height = 1920, 1080
+        # Recording parameters from config
+        video_params = self.config['data_collection']['video_params']
+        self.fourcc = cv2.VideoWriter_fourcc(*video_params['codec'])
+        self.frame_width = video_params['frame_width']
+        self.frame_height = video_params['frame_height']
         
         # Buffers for data synchronization
         self.video_buffer = deque()
@@ -57,7 +60,8 @@ class DataRecorder:
 
     def setup_data_paths(self):
         """Set up necessary directories and paths for data storage."""
-        self.data_path = os.path.join('/home/zhaxizhuoma/data/ACT/', str(self.task))
+        base_path = self.config['data_collection']['base_data_path']
+        self.data_path = os.path.join(base_path, str(self.task))
         self.image_path = os.path.join(self.data_path, 'camera/')
         self.csv_path = os.path.join(self.data_path, 'csv/')
         self.state_path = os.path.join(self.data_path, 'states.csv')
@@ -99,7 +103,8 @@ class DataRecorder:
         """Write video frames to file with progress tracking."""
         frame_index = 0
         previous_progress = 0
-        pbar = tqdm(total=self.cfg['episode_len'], desc='Processing Frames')
+        episode_len = self.config['recording']['episode_len']
+        pbar = tqdm(total=episode_len, desc='Processing Frames')
 
         while not rospy.is_shutdown():
             with self.buffer_lock:
@@ -113,7 +118,7 @@ class DataRecorder:
                     pbar.update(current_progress - previous_progress)
                     previous_progress = current_progress
                     
-                    if frame_index == 3 * self.cfg['episode_len']:
+                    if frame_index == 3 * episode_len:
                         print("Video recording completed")
                         pbar.close()
                         break
@@ -122,13 +127,14 @@ class DataRecorder:
     def write_trajectory(self):
         """Write trajectory data to CSV file."""
         counter = 0
+        episode_len = self.config['recording']['episode_len']
         while not rospy.is_shutdown():
             with self.buffer_lock:
                 if self.trajectory_buffer:
                     data = self.trajectory_buffer.popleft()
                     self.trajectory_writer.writerows([data])
                     counter += 1
-                    if counter == 10 * self.cfg['episode_len']:
+                    if counter == 10 * episode_len:
                         print("Trajectory recording completed")
                         break
             sleep(0.001)
@@ -155,7 +161,9 @@ class DataRecorder:
         }
 
         # Initialize writers and files
-        self.video_writer = cv2.VideoWriter(temp_paths['video'], self.fourcc, 60, (self.frame_width, self.frame_height))
+        fps = self.config['data_collection']['video_params']['fps']
+        self.video_writer = cv2.VideoWriter(temp_paths['video'], self.fourcc, fps, 
+                                          (self.frame_width, self.frame_height))
         self.trajectory_file = open(temp_paths['trajectory'], 'w')
         self.timestamp_file = open(temp_paths['timestamp'], 'w')
         
@@ -188,11 +196,12 @@ class DataRecorder:
 
     def save_episode_data(self, episode_idx, temp_paths):
         """Save episode data to HDF5 format."""
+        camera_config = self.config['data_collection']['camera']
         data_dict = {
             '/observations/qpos': [],
             '/action': [],
         }
-        for cam_name in self.cfg['camera_names']:
+        for cam_name in camera_config['names']:
             data_dict[f'/observations/images/{cam_name}'] = []
 
         # Process video frames
@@ -207,7 +216,7 @@ class DataRecorder:
                 filename = f"{int(row['Frame Index'] / 3)}.jpg"
                 cv2.imwrite(os.path.join(self.image_path, filename), frame)
                 
-                for cam_name in self.cfg['camera_names']:
+                for cam_name in camera_config['names']:
                     data_dict[f'/observations/images/{cam_name}'].append(frame)
 
         # Process trajectory data
@@ -219,30 +228,37 @@ class DataRecorder:
 
     def save_to_hdf5(self, data_dict, episode_idx, timestamps, trajectory):
         """Save processed data to HDF5 file format."""
-        data_dir = os.path.join(self.cfg['dataset_dir'], self.task)
+        data_dir = os.path.join(self.data_path, 'hdf5')
         os.makedirs(data_dir, exist_ok=True)
         
         idx = len([name for name in os.listdir(data_dir) if os.path.isfile(os.path.join(data_dir, name))])
         dataset_path = os.path.join(data_dir, f'episode_{idx}.hdf5')
         
-        with h5py.File(dataset_path, 'w', rdcc_nbytes=1024 ** 2 * 2) as root:
+        hdf5_config = self.config['storage']['hdf5']
+        camera_config = self.config['data_collection']['camera']
+        recording_config = self.config['recording']
+        
+        with h5py.File(dataset_path, 'w', rdcc_nbytes=1024 ** 2 * hdf5_config['cache_size_mb']) as root:
             root.attrs['sim'] = True
             obs = root.create_group('observations')
             image = obs.create_group('images')
             
-            for cam_name in self.cfg['camera_names']:
+            for cam_name in camera_config['names']:
                 image.create_dataset(
                     cam_name,
-                    (len(data_dict['/observations/qpos']), self.cfg['cam_height'], 
-                        self.cfg['cam_width'], 3),
+                    (len(data_dict['/observations/qpos']), camera_config['height'], 
+                     camera_config['width'], 3),
                     dtype='uint8',
-                    chunks=(1, self.cfg['cam_height'], self.cfg['cam_width'], 3),
-                    compression='gzip',
-                    compression_opts=4
+                    chunks=(hdf5_config['chunk_size'], camera_config['height'], 
+                           camera_config['width'], 3),
+                    compression=hdf5_config['compression'],
+                    compression_opts=hdf5_config['compression_level']
                 )
             
-            obs.create_dataset('qpos', (len(data_dict['/observations/qpos']), self.cfg['state_dim']))
-            root.create_dataset('action', (len(data_dict['/observations/qpos']), self.cfg['action_dim']))
+            obs.create_dataset('qpos', (len(data_dict['/observations/qpos']), 
+                                      recording_config['state_dim']))
+            root.create_dataset('action', (len(data_dict['/observations/qpos']), 
+                                         recording_config['action_dim']))
             
             for name, array in data_dict.items():
                 root[name][...] = array
@@ -251,18 +267,23 @@ def main():
     """Main function to run the data collection system."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', type=str, default="test", 
-                        help="Task name (e.g., open_lid, open_fridge, open_drawer, pick_place_pot)")
+                       help="Task name (e.g., open_lid, open_fridge, open_drawer, pick_place_pot)")
     parser.add_argument('--num_episodes', type=int, default=2,
-                        help="Number of episodes to record")
+                       help="Number of episodes to record")
+    parser.add_argument('--config', type=str, default='config.json',
+                       help="Path to configuration file")
     args = parser.parse_args()
 
-    recorder = DataRecorder(args.task, args.num_episodes)
+    recorder = DataRecorder(args.task, args.num_episodes, args.config)
     
     # Set up ROS subscribers
+    ros_config = recorder.config['data_collection']['ros']
     recorder.video_subscriber = rospy.Subscriber(
-        "/usb_cam/image_raw", Image, recorder.video_callback, queue_size=1000)
+        ros_config['video_topic'], Image, recorder.video_callback, 
+        queue_size=ros_config['queue_size'])
     recorder.trajectory_subscriber = rospy.Subscriber(
-        "/camera/odom/sample", Odometry, recorder.trajectory_callback, queue_size=1000)
+        ros_config['trajectory_topic'], Odometry, recorder.trajectory_callback, 
+        queue_size=ros_config['queue_size'])
 
     # Record episodes
     for i in range(args.num_episodes):
