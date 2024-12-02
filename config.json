@@ -30,5 +30,34 @@
             "compression_level": 4,
             "cache_size_mb": 2
         }
-    }
+    },
+
+    
+    "input_dir": "path_to_input_directory",
+    "output_dir": "path_to_output_directory",
+    "robot_urdf_path": "path_to_robot_urdf", 
+    "aruco_dict": "DICT_4X4_50",
+    "base_position": {
+      "x": 0.49643,
+      "y": -0.00588,
+      "z": 0.35984
+    },
+    "base_orientation": {
+      "roll": 179.94725,
+      "pitch": -89.999981,
+      "yaw": 0.0
+    },
+    "offset": {
+      "x_offset": 0.14565,
+      "z_offset": 0.1586
+    },
+    "distances": {
+      "marker_max": 566.0,
+      "marker_min": 140.0,
+      "gripper_max": 850.0
+    },
+    "start_qpos": [
+      0, 0, -0.02792803756892681, -0.47473636269569397, -0.0384012907743454,
+      -0.022689493373036385, -1.057666301727295, 0.0034878887236118317
+    ]
 }
