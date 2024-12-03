@@ -11,7 +11,7 @@ To set up the environment, follow these steps:
     http://wiki.ros.org/ROS/Installation
 
 2. **Python Environment**  
-    Use Python version `3.8.19`. Install the required Python packages:
+    Use Python version `3.8.0`. Install the required Python packages:
 
         pip install torchvision
         pip install torch
