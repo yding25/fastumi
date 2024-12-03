@@ -1,4 +1,4 @@
-# FastUMI
+# FastUMI_Data
 
 ## 1. Environment Setup
 
