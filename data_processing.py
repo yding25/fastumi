@@ -27,7 +27,7 @@ parameters = cv2.aruco.DetectorParameters()
 print(f"Number of joints in the chain: {len(my_chain)}")
 
 
-def calculate_new_pose(x, y, z, quaternion, distance=0.25):
+def calculate_new_pose(x, y, z, quaternion, distance):
     """
     Calculate a new pose by translating along the negative Z-axis of the given pose.
     """
@@ -178,7 +178,7 @@ def normalize_ik_and_save_hdf5(args):
                 q = np.array(pose[3:])
 
                 direction, quaternion = calculate_new_pose(
-                    direction[0], direction[1], direction[2], q)
+                    direction[0], direction[1], direction[2], q, config["distances"]["flange_to_tcp"])
                 if i == 0:
                     initial_joint_angles = np.array(START_QPOS)
                     full_joint_angles = cartesian_to_joints(

@@ -54,7 +54,8 @@
     "distances": {
       "marker_max": 566.0,
       "marker_min": 140.0,
-      "gripper_max": 850.0
+      "gripper_max": 850.0,
+      "flange_to_tcp": 0.25
     },
     "start_qpos": [
       0, 0, -0.02792803756892681, -0.47473636269569397, -0.0384012907743454,
