@@ -1,4 +1,6 @@
-# FastUMI_Data
+![](docs/fastumi-data.png)
+
+Welcome to the official repository of FastUMI!
 
 ## 1. Environment Setup
 
