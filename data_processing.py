@@ -76,7 +76,7 @@ def get_gripper_width(img_list):
             current_frame += 1
             marker_centers = []
             for idx, marker_id in enumerate(ids.flatten()):
-                if marker_id in [0, 1]:
+                if marker_id in [config["marker_id_0"], config["marker_id_1"]]:
                     marker_corners = corners[idx][0]
                     center = np.mean(marker_corners, axis=0).astype(int)
                     marker_centers.append(center)

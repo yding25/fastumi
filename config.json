@@ -21,8 +21,8 @@
   "data_process_config": {
       "marker_id_0":0,
       "marker_id_1":1,
-      "input_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test",
-      "output_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test_gripper",
+      "input_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test3",
+      "output_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test3_gripper",
       "urdf_path": "/home/zhaxizhuoma/fast/xarm6_robot.urdf",
       "aruco_dict": "DICT_4X4_50",
       "base_position": {

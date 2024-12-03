@@ -40,7 +40,7 @@ TASK_CONFIG = config['task_config']
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--task', type=str, default="test5")  # open_lid, open_fridge, open_drawer, pick_place_pot
+parser.add_argument('--task', type=str, default="test3")  # open_lid, open_fridge, open_drawer, pick_place_pot
 parser.add_argument('--num_episodes', type=int, default=2)
 args = parser.parse_args()
 task = args.task
