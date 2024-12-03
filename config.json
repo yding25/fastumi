@@ -1,64 +1,55 @@
 {
-    "data_collection": {
-        "base_data_path": "path_to_data_directory",
-        "video_params": {
-            "frame_width": 1920,
-            "frame_height": 1080,
-            "fps": 60,
-            "codec": "mp4v"
-        },
-        "ros": {
-            "video_topic": "/usb_cam/image_raw",
-            "trajectory_topic": "/camera/odom/sample",
-            "queue_size": 1000
-        },
-        "camera": {
-            "names": ["main_camera"],
-            "height": 1080,
-            "width": 1920
-        }
-    },
-    "recording": {
-        "episode_len": 300,
-        "state_dim": 7,
-        "action_dim": 7
-    },
-    "storage": {
-        "hdf5": {
-            "chunk_size": 1,
-            "compression": "gzip",
-            "compression_level": 4,
-            "cache_size_mb": 2
-        }
-    },
-
-    
-    "input_dir": "path_to_input_directory",
-    "output_dir": "path_to_output_directory",
-    "robot_urdf_path": "path_to_robot_urdf", 
-    "aruco_dict": "DICT_4X4_50",
-    "base_position": {
-      "x": 0.49643,
-      "y": -0.00588,
-      "z": 0.35984
-    },
-    "base_orientation": {
-      "roll": 179.94725,
-      "pitch": -89.999981,
-      "yaw": 0.0
-    },
-    "offset": {
-      "x_offset": 0.14565,
-      "z_offset": 0.1586
-    },
-    "distances": {
-      "marker_max": 566.0,
-      "marker_min": 140.0,
-      "gripper_max": 850.0,
-      "flange_to_tcp": 0.25
-    },
-    "start_qpos": [
-      0, 0, -0.02792803756892681, -0.47473636269569397, -0.0384012907743454,
-      -0.022689493373036385, -1.057666301727295, 0.0034878887236118317
-    ]
+  "device_settings": {
+      "robot_type": "XARM6",
+      "data_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/",
+      "device": "cpu"
+  },
+  "task_config": {
+      "episode_len": 180,
+      "state_dim": 7,
+      "action_dim": 7,
+      "cam_width": 1920,
+      "cam_height": 1080,
+      "camera_names": ["front"],
+      "camera_port": 0,
+      "ros": {
+          "video_topic": "/usb_cam/image_raw",
+          "trajectory_topic": "/camera/odom/sample",
+          "queue_size": 1000
+      }
+  },
+  "data_process_config": {
+      "marker_id_0":0,
+      "marker_id_1":1,
+      "input_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test",
+      "output_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test_gripper",
+      "urdf_path": "/home/zhaxizhuoma/fast/xarm6_robot.urdf",
+      "aruco_dict": "DICT_4X4_50",
+      "base_position": {
+          "x": 0.49643,
+          "y": -0.00588,
+          "z": 0.35984
+      },
+      "base_orientation": {
+          "roll": 179.94725,
+          "pitch": -89.999981,
+          "yaw": 0.0
+      },
+      "offset": {
+          "x": 0.14565,
+          "z": 0.1586
+      },
+      "distances": {
+          "marker_max": 566.0,
+          "marker_min": 140.0,
+          "gripper_max": 850.0,
+          "gripper_min": 0,
+          "flange_to_tcp": 0.25
+      },
+      "start_qpos": [
+          0, 0, -0.02792803756892681, -0.47473636269569397, 
+          -0.0384012907743454, -0.022689493373036385,
+          -1.057666301727295, 0.0034878887236118317
+      ]
+  }
 }

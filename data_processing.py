@@ -12,13 +12,14 @@ import json
 # Load the configuration from the config.json file
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
+config = config["data_process_config"]
 
 # Extract configuration values
 START_QPOS = config["start_qpos"] # Initial joint positions for the robot (values specific to your robot's configuration)
 PI = np.pi
 
 # Load the robot chain
-my_chain = ikpy.chain.Chain.from_urdf_file(config["robot_urdf_path"], base_elements=['world']) # Path to the URDF file of the robot model (replace with your robot's URDF file in config.json)
+my_chain = ikpy.chain.Chain.from_urdf_file(config["urdf_path"], base_elements=['world']) # Path to the URDF file of the robot model (replace with your robot's URDF file in config.json)
 
 # Load predefined ArUco dictionary
 aruco_dict = cv2.aruco.getPredefinedDictionary(getattr(cv2.aruco, config["aruco_dict"]))
@@ -154,14 +155,14 @@ def normalize_ik_and_save_hdf5(args):
 
             for i in range(normalized_qpos.shape[0]):
                 x, y, z, qx, qy, qz, qw = normalized_qpos[i, 0:7]
-                x -= config["offset"]["x_offset"]
-                z += config["offset"]["z_offset"]
+                x -= config["offset"]["x"]
+                z += config["offset"]["z"]
                 x_base, y_base, z_base, qx_base, qy_base, qz_base, qw_base, _, _, _ = transform_to_base_quat(
                     x, y, z, qx, qy, qz, qw, T_base_to_local)
                 ori = R.from_quat([qx_base, qy_base, qz_base, qw_base]).as_matrix()
                 pos = np.array([x_base, y_base, z_base])
-                pos += config["offset"]["x_offset"] * ori[:, 2]
-                pos -= config["offset"]["z_offset"] * ori[:, 0]
+                pos += config["offset"]["x"] * ori[:, 2]
+                pos -= config["offset"]["z"] * ori[:, 0]
                 x_base, y_base, z_base = pos
                 normalized_qpos[i, :] = [x_base, y_base, z_base, qx_base, qy_base, qz_base, qw_base]
 
