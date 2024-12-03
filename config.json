@@ -1,7 +1,7 @@
 {
   "device_settings": {
       "robot_type": "XARM6",
-      "data_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/",
+      "data_dir": "./",
       "device": "cpu"
   },
   "task_config": {
@@ -21,9 +21,9 @@
   "data_process_config": {
       "marker_id_0":0,
       "marker_id_1":1,
-      "input_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test3",
-      "output_dir": "/home/zhaxizhuoma/mydrive/fastumi_web_unload/dataset/test3_gripper",
-      "urdf_path": "/home/zhaxizhuoma/fast/xarm6_robot.urdf",
+      "input_dir": "./dataset/test",
+      "output_dir": "./dataset/test_gripper",
+      "urdf_path": "/home/AlexLiu/DATA/Research_LX/C_Manipulation_train/ACT/xarm6_robot.urdf",
       "aruco_dict": "DICT_4X4_50",
       "base_position": {
           "x": 0.49643,

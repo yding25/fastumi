@@ -30,6 +30,8 @@ To set up the environment, follow these steps:
         pip install ikpy
         pip install pyrealsense2
         pip install csvkit
+        pip install apriltag
+        pip install pandas
 
 3. **Install the necessary ROS packages**
 
