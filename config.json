@@ -1,6 +1,6 @@
 {
     "data_collection": {
-        "base_data_path": "/home/zhaxizhuoma/data/ACT/",
+        "base_data_path": "path_to_data_directory",
         "video_params": {
             "frame_width": 1920,
             "frame_height": 1080,
