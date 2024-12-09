@@ -2,7 +2,23 @@
 
 Welcome to the official repository of FastUMI!
 
-## 1. Environment Setup
+[![Releases](https://img.shields.io/github/release/Zhefan-Xu/CERLAB-UAV-Autonomy.svg)]([https://github.com/Zhefan-Xu/CERLAB-UAV-Autonomy/releases](https://github.com/zxzm-zak/AlignBot/blob/main/README.md))
+[![license](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) 
+[![Linux platform](https://img.shields.io/badge/platform-linux--64-orange.svg)](https://releases.ubuntu.com/20.04/)
+
+**Fast-UMI: A Scalable and Hardware-Independent Universal Manipulation Interface**
+
+[[Project page]](https://fastumi.com/)
+[[PDF (Early Version)]](https://arxiv.org/abs/2409.19499)
+[[PDF (TBA)]](https://fastumi.com/)
+[[Dataset (TBA)]](https://fastumi.com/)
+
+## Abstract
+
+Collecting real-world manipulation trajectory data involving robotic arms is essential for developing general-purpose action policies in robotic manipulation, yet such data remains scarce. Existing methods face limitations such as high costs, labor intensity, hardware dependencies, and complex setup requirements involving SLAM algorithms. In this work, we introduce Fast-UMI, an interface-mediated manipulation system comprising two key components: a handheld device operated by humans for data collection and a robot-mounted device used during policy inference. Our approach employs a decoupled design compatible with a wide range of grippers while maintaining consistent observation perspectives, allowing models trained on handheld-collected data to be directly applied to real robots. By directly obtaining the end-effector pose using existing commercial hardware products, we eliminate the need for complex SLAM deployment and calibration, streamlining data processing. Fast-UMI provides supporting software tools for efficient robot learning data collection and conversion, facilitating rapid, plug-and-play functionality. This system offers an efficient and user-friendly tool for robotic learning data acquisition.
+
+
+## 1. 🛠️ Environment Setup
 
 To set up the environment, follow these steps:
 
@@ -13,27 +29,11 @@ To set up the environment, follow these steps:
     http://wiki.ros.org/ROS/Installation
 
 2. **Python Environment**  
-    Use Python version `3.8.0`. Install the required Python packages:
+    Create a Virtual Environment and Install Dependencies
 
-        pip install torchvision
-        pip install torch
-        pip install pyquaternion
-        pip install pyyaml
-        pip install rospkg
-        pip install pexpect
-        pip install mujoco==2.3.7
-        pip install dm_control==1.0.14
-        pip install matplotlib
-        pip install einops
-        pip install packaging
-        pip install h5py
-        pip install ipython
-        pip install opencv-contrib-python
-        pip install ikpy
-        pip install pyrealsense2
-        pip install csvkit
-        pip install apriltag
-        pip install pandas
+        conda create -n FastUMI python=3.8.10
+        conda activate FastUMI
+        pip install -r requirements.txt
 
 3. **Install the necessary ROS packages**
 
