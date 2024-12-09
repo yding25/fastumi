@@ -20,7 +20,6 @@ Welcome to the official repository of FastUMI!
 [[Huggingface Dataset]](https://huggingface.co/datasets/IPEC-COMMUNITY/FastUMI-Data)
 [[PDF (Early Version)]](https://arxiv.org/abs/2409.19499)
 [[PDF (TBA)]](https://fastumi.com/)
-[[Dataset (TBA)]](https://fastumi.com/)
 
 ![](docs/fastumi.jpg)
 
