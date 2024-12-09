@@ -1,3 +1,9 @@
+![](docs/fastumi-data.png)
+
+<p align="center">
+Welcome to the official repository of FastUMI!
+</p>
+
 <br>
 <p align="center">
 <h1 align="center"><strong>Fast-UMI: A Scalable and Hardware-Independent Universal Manipulation Interface</strong></h1>
@@ -15,10 +21,6 @@
 [[PDF (Early Version)]](https://arxiv.org/abs/2409.19499)
 [[PDF (TBA)]](https://fastumi.com/)
 [[Dataset (TBA)]](https://fastumi.com/)
-
-![](docs/fastumi-data.png)
-
-Welcome to the official repository of FastUMI!
 
 ![](docs/fastumi.jpg)
 
