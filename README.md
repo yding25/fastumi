@@ -31,7 +31,7 @@ To set up the environment, follow these steps:
 2. **Python Environment**  
     Create a Virtual Environment and Install Dependencies
 
-        conda create -n FastUMI python=3.8.10
+        conda create -n FastUMI python=3.8.0
         conda activate FastUMI
         pip install -r requirements.txt
 
