@@ -9,6 +9,7 @@ Welcome to the official repository of FastUMI!
 **Fast-UMI: A Scalable and Hardware-Independent Universal Manipulation Interface**
 
 [[Project page]](https://fastumi.com/)
+[[Huggingface Dataset]](https://huggingface.co/datasets/IPEC-COMMUNITY/FastUMI-Data)
 [[PDF (Early Version)]](https://arxiv.org/abs/2409.19499)
 [[PDF (TBA)]](https://fastumi.com/)
 [[Dataset (TBA)]](https://fastumi.com/)
