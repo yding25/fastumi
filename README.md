@@ -5,6 +5,7 @@ Welcome to the official repository of FastUMI!
 [![Releases](https://img.shields.io/github/release/Zhefan-Xu/CERLAB-UAV-Autonomy.svg)]([https://github.com/Zhefan-Xu/CERLAB-UAV-Autonomy/releases](https://github.com/zxzm-zak/AlignBot/blob/main/README.md))
 [![license](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 [![Linux platform](https://img.shields.io/badge/platform-linux--64-orange.svg)](https://releases.ubuntu.com/20.04/)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FastUMI_Data-blue.svg)](https://huggingface.co/datasets/cpa2001/FastUMI_Data)
 
 **Fast-UMI: A Scalable and Hardware-Independent Universal Manipulation Interface**
 
