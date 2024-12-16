@@ -46,7 +46,7 @@ Physical prototypes of Fast-UMI system
   - [3.1 🤝 Trajectory Transformation](#31--trajectory-transformation)
   - [3.2 📸 Gripper Width Detection](#32--gripper-width-detection)
   - [3.3 🏹 Inverse Kinematics (IK) Computation](#33--inverse-kinematics-ik-computation)
-  - [3.4 🎄 Different Types of Data](#34--different-types-of-data)
+  - [3.4 🎄 Different Types of Data Processing](#34--different-types-of-data-processing)
 - [4. 📠 File and Data Structure Description](#4--file-and-data-structure-description)
   - [4.1 📖 File Structure](#41--file-structure)
   - [4.2 📜 Data Structure](#42--data-structure)
@@ -147,7 +147,7 @@ Alternatively, use the provided shell script.
 - A simple IK computation is implemented to convert TCP data into the corresponding absolute joint angles of the robot arm, which facilitates ACT model training.
 - To calculate IK, the distance from the TCP to the flange must be obtained. The `distances` field in the `config.json` file includes this distance as `flange_to_tcp`.
 
-### 3.4 🎄 Different Types of Data
+### 3.4 🎄 Different Types of Data Processing
 - To accommodate different types of algorithms, the scripts `data_processing_to_joint.py` and `data_processing_to_tcp.py` provide methods for generating the absolute joint angles and TCP data of the robot arm, respectively.
 - To ensure compatibility with other UMI-Like datasets and facilitate adaptation to **Diffusion Policy**, we provide the script `data_processing_tcp_to_dp.py` to convert TCP data from HDF5 format into **Zarr** as the container for training datasets. Zarr is similar to HDF5 but offers better flexibility in terms of storage backends, chunking, compression, and parallel access.
 
