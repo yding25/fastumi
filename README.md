@@ -32,23 +32,24 @@ Physical prototypes of Fast-UMI system
 - [📋 Contents](#-contents)
 - [🔥 News](#-news)
 - [💡 Abstract](#-abstract)
-- [🏠 Environment Setup](#1--environment-setup)
-  - [🚀 ROS Installation](#11--ros-installation)
-  - [🔭 Python Environment](#12--python-environment)
-  - [🛒 Install the necessary ROS packages](#13--install-the-necessary-ros-packages)
-  - [📺 Intel RealSense Dependencies](#14--intel-realsense-dependencies)
-- [📝 Workflow](#2--workflow)
-  - [🌏 Start ROS Core](#21--start-ros-core)
-  - [🪢 Connect RealSense T265 and GoPro](#22--connect-realsense-t265-and-gopro)
-  - [🎇 Open RViz for Visualization](#23--open-rviz-for-visualization)
-  - [🏷️ Run Data Collection Script](#24-️-run-data-collection-script)
-- [📚 Data Processing Details](#3--data-processing-details)
-  - [🤝 Trajectory Transformation](#31--trajectory-transformation)
-  - [📸 Gripper Width Detection](#32--gripper-width-detection)
-  - [🏹 Inverse Kinematics (IK) Computation](#33--inverse-kinematics-ik-computation)
-- [📠 File and Data Structure Description](#4--file-and-data-structure-description)
-  - [📖 File Structure](#41--file-structure)
-  - [📜 Data Structure](#42--data-structure)
+- [1. 🏠 Environment Setup](#1--environment-setup)
+  - [1.1 🚀 ROS Installation](#11--ros-installation)
+  - [1.2 🔭 Python Environment](#12--python-environment)
+  - [1.3 🛒 Install the necessary ROS packages](#13--install-the-necessary-ros-packages)
+  - [1.4 📺 Intel RealSense Dependencies](#14--intel-realsense-dependencies)
+- [2. 📝 Workflow](#2--workflow)
+  - [2.1 🌏 Start ROS Core](#21--start-ros-core)
+  - [2.2 🪢 Connect RealSense T265 and GoPro](#22--connect-realsense-t265-and-gopro)
+  - [2.3 🎇 Open RViz for Visualization](#23--open-rviz-for-visualization)
+  - [2.4 🏷️ Run Data Collection Script](#24-️-run-data-collection-script)
+- [3. 📚 Data Processing Details](#3--data-processing-details)
+  - [3.1 🤝 Trajectory Transformation](#31--trajectory-transformation)
+  - [3.2 📸 Gripper Width Detection](#32--gripper-width-detection)
+  - [3.3 🏹 Inverse Kinematics (IK) Computation](#33--inverse-kinematics-ik-computation)
+  - [3.4 🎄 Different Types of Data](#34--different-types-of-data)
+- [4. 📠 File and Data Structure Description](#4--file-and-data-structure-description)
+  - [4.1 📖 File Structure](#41--file-structure)
+  - [4.2 📜 Data Structure](#42--data-structure)
 
 
 ## 🔥 News
@@ -146,6 +147,9 @@ Alternatively, use the provided shell script.
 - A simple IK computation is implemented to convert TCP data into the corresponding absolute joint angles of the robot arm, which facilitates ACT model training.
 - To calculate IK, the distance from the TCP to the flange must be obtained. The `distances` field in the `config.json` file includes this distance as `flange_to_tcp`.
 
+### 3.4 🎄 Different Types of Data
+- To accommodate different types of algorithms, the scripts `data_processing_to_joint.py` and `data_processing_to_tcp.py` provide methods for generating the absolute joint angles and TCP data of the robot arm, respectively.
+- To ensure compatibility with other UMI-Like datasets and facilitate adaptation to **Diffusion Policy**, we provide the script `data_processing_tcp_to_dp.py` to convert TCP data from HDF5 format into **Zarr** as the container for training datasets. Zarr is similar to HDF5 but offers better flexibility in terms of storage backends, chunking, compression, and parallel access.
 
 ## 4. 📠 File and Data Structure Description
 
