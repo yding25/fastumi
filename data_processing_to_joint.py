@@ -10,7 +10,7 @@ from multiprocessing import Pool, cpu_count
 import json
 
 # Load the configuration from the config.json file
-with open('config.json', 'r') as config_file:
+with open('config/config.json', 'r') as config_file:
     config = json.load(config_file)
 config = config["data_process_config"]
 
@@ -228,7 +228,7 @@ def normalize_ik_and_save_hdf5(args):
 
 if __name__ == "__main__":
     input_dir = config["input_dir"]
-    output_dir = config["output_dir"]
+    output_dir = config["output_joint_dir"]
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

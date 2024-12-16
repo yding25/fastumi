@@ -22,7 +22,7 @@ from datetime import datetime
 import pandas as pd
 
 # Load configuration from config.json
-with open('config.json', 'r') as f:
+with open('config/config.json', 'r') as f:
     config = json.load(f)
 
 # Set environment variables
