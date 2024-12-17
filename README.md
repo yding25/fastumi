@@ -60,7 +60,7 @@ Physical prototypes of Fast-UMI system
 Collecting real-world manipulation trajectory data involving robotic arms is essential for developing general-purpose action policies in robotic manipulation, yet such data remains scarce. Existing methods face limitations such as high costs, labor intensity, hardware dependencies, and complex setup requirements involving SLAM algorithms. In this work, we introduce Fast-UMI, an interface-mediated manipulation system comprising two key components: a handheld device operated by humans for data collection and a robot-mounted device used during policy inference. Our approach employs a decoupled design compatible with a wide range of grippers while maintaining consistent observation perspectives, allowing models trained on handheld-collected data to be directly applied to real robots. By directly obtaining the end-effector pose using existing commercial hardware products, we eliminate the need for complex SLAM deployment and calibration, streamlining data processing. Fast-UMI provides supporting software tools for efficient robot learning data collection and conversion, facilitating rapid, plug-and-play functionality. This system offers an efficient and user-friendly tool for robotic learning data acquisition.
 
 
-## 1. 🏠 Environment Setup
+## 1. 🏠 Environment and GoPro Setup
 
 To set up the environment, follow these steps:
 
@@ -99,6 +99,11 @@ If your system is missing RealSense dependencies, follow these steps:
   sudo apt install librealsense2-dkms librealsense2-utils librealsense2-dev librealsense2-dbg
   ```
 
+### 1.5 📷 GoPro Setup
+* Install GoPro Labs [firmware](https://gopro.github.io/labs/).
+* Set date and time.
+* Scan the following QR code for GoPro setting.
+<br><img width="50%" src="camera_setting_code.jpg">
 ---
 
 ## 2. 📝 Workflow
