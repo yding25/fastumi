@@ -1,2 +1,12 @@
-'data_image.py' can extract images from all hdf5 files in the folder and generate MP4 videos.
-'data_trajectory.py' can visualize the 'qpos' trajectory in the hdf5 file.
+## Scripts Overview
+
+### `data_image.py`
+
+- **Functionality**:
+  - Extracts images from all HDF5 files in the specified folder.
+  - Generates MP4 videos from the extracted images.
+
+### `data_trajectory.py`
+
+- **Functionality**:
+  - Visualizes the `qpos` trajectory data contained in an HDF5 file.
